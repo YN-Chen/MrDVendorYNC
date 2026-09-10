@@ -8,31 +8,52 @@
 import XCTest
 @testable import MrDVendorYNC
 
-final class MrDVendorYNCTests: XCTestCase {
+final class VendorServiceTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    func testDecodeVendorsParsesFieldsIncludingOptionalCoordinate() throws {
+        let json = """
+        {
+          "vendors": [
+            {
+              "id": "ven-001",
+              "name": "Mr D Pizza — Cape Town CBD",
+              "address": "12 Loop St, Cape Town, 8000",
+              "coordinate": { "lat": -33.918861, "lng": 18.423300 },
+              "isFavorite": false,
+              "updatedAt": "2025-06-01T12:00:00Z"
+            },
+            {
+              "id": "ven-005",
+              "name": "Observatory Coffee Roasters",
+              "address": "9 Lower Main Rd, Observatory, Cape Town, 7925",
+              "coordinate": null,
+              "isFavorite": false,
+              "updatedAt": "2025-06-05T08:00:00Z"
+            }
+          ]
+        }
+        """
+        let data = Data(json.utf8)
+
+        let vendors = try VendorService.decodeVendors(from: data)
+
+        XCTAssertEqual(vendors.count, 2)
+
+        let pizza = try XCTUnwrap(vendors.first { $0.id == "ven-001" })
+        XCTAssertEqual(pizza.name, "Mr D Pizza — Cape Town CBD")
+        XCTAssertEqual(pizza.address, "12 Loop St, Cape Town, 8000")
+        XCTAssertEqual(pizza.isFavorite, false)
+        XCTAssertEqual(pizza.coordinate, VendorCoordinate(lat: -33.918861, lng: 18.423300))
+
+        let noCoordinateVendor = try XCTUnwrap(vendors.first { $0.id == "ven-005" })
+        XCTAssertNil(noCoordinateVendor.coordinate)
     }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
+    func testDecodeVendorsThrowsDecodingErrorForMalformedJSON() {
+        let malformedJSON = Data("{ \"vendors\": [ { \"id\": 42 } ] }".utf8)
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-        // XCTest Documentation
-        // https://developer.apple.com/documentation/xctest
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+        XCTAssertThrowsError(try VendorService.decodeVendors(from: malformedJSON)) { error in
+            XCTAssertEqual(error as? AppError, .decoding)
         }
     }
-
 }
