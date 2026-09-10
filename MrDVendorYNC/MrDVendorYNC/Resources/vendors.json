@@ -1,0 +1,44 @@
+{
+  "vendors": [
+    {
+      "id": "ven-001",
+      "name": "Mr D Pizza — Cape Town CBD",
+      "address": "12 Loop St, Cape Town, 8000",
+      "coordinate": { "lat": -33.918861, "lng": 18.423300 },
+      "isFavorite": false,
+      "updatedAt": "2025-06-01T12:00:00Z"
+    },
+    {
+      "id": "ven-002",
+      "name": "Kloof Street Kitchen",
+      "address": "118 Kloof St, Cape Town, 8001",
+      "coordinate": { "lat": -33.933838, "lng": 18.405766 },
+      "isFavorite": true,
+      "updatedAt": "2025-06-02T09:30:00Z"
+    },
+    {
+      "id": "ven-003",
+      "name": "Woodstock Noodle Bar",
+      "address": "72 Albert Rd, Woodstock, Cape Town, 7925",
+      "coordinate": { "lat": -33.928120, "lng": 18.451750 },
+      "isFavorite": false,
+      "updatedAt": "2025-06-03T15:45:00Z"
+    },
+    {
+      "id": "ven-004",
+      "name": "Sea Point Grill",
+      "address": "45 Main Rd, Sea Point, Cape Town, 8005",
+      "coordinate": { "lat": -33.916300, "lng": 18.383600 },
+      "isFavorite": false,
+      "updatedAt": "2025-06-04T11:15:00Z"
+    },
+    {
+      "id": "ven-005",
+      "name": "Observatory Coffee Roasters",
+      "address": "9 Lower Main Rd, Observatory, Cape Town, 7925",
+      "coordinate": null,
+      "isFavorite": false,
+      "updatedAt": "2025-06-05T08:00:00Z"
+    }
+  ]
+}

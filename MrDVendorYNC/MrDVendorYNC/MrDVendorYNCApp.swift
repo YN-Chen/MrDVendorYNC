@@ -6,12 +6,19 @@
 //
 
 import SwiftUI
+import GoogleMaps
+import GooglePlaces
 
 @main
 struct MrDVendorYNCApp: App {
+    init() {
+        GMSServices.provideAPIKey(AppConfig.googleAPIKey)
+        GMSPlacesClient.provideAPIKey(AppConfig.googleAPIKey)
+    }
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RootView()
         }
     }
 }

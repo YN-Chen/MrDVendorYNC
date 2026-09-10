@@ -2,11 +2,13 @@
 //  AppError.swift
 //  MrDVendorYNC
 //
+//  Created by Yi-Nain Chen on 2026/09/09.
+//
 
 import Foundation
 
-/// User-facing error type. Every layer (networking, decoding, keychain) maps
-/// its own errors into this so views only ever need to show `errorDescription`.
+// NOTES:
+// Central unified error type for the whole Vendor app so that the facing UI layer on needs the errorDescription to throw just that.
 enum AppError: LocalizedError, Equatable {
     case offline
     case server(status: Int)
